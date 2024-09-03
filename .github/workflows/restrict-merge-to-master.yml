@@ -1,0 +1,16 @@
+name: Restrict Merge to Master
+
+on:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  restrict-merge:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check if PR is from develop
+        if: github.event.pull_request.head.ref != 'develop'
+        run: |
+          echo "Pull requests to master are only allowed from the develop branch."
+          exit 1
